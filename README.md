@@ -1,19 +1,33 @@
 # Unwrapped
 
-To start your Phoenix server:
+We keep buying the same gifts for each other. To avoid gift collision, 
+we present, 
+unwrapped.
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.setup`
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+## Core loop
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+1. Sign-up to events
+2. See people in that event
+3. See what gifts those people are receiving
+4. Don't see your own gift
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+## Road Map
+### Home Screen
 
-## Learn more
+Pick an event, or find a person, to either sign up to an event or find a person to buy a gift for.
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+### Pick an event
+
+List all events, and you can sign up to them. You have the option to create an event and invite people to that event.
+
+### Event
+
+Lists out all the people that have been invited to that event, you can add a person there as well
+
+### Person
+
+Click on a person, summary of gifts that that person is recieivng. You can add a gift that you are getting them. If you type the same thing as someone else, then gift collision pops up, and an explosion. 
+
+### Find a person
+
+Search your friends, once you click on that person, you can add gift ideas for that person. that person can add gift ideas for themselves.
