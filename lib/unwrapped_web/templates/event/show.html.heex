@@ -6,6 +6,9 @@
     <strong>Name:</strong>
     <%= @event.name %>
   </li>
+  <%= for item <- @users do %>
+    <p><%= item.email %></p>
+  <% end %>
 
 </ul>
 <span><%= link "Sign Up", to: Routes.event_path(@conn, :index) %></span> |
