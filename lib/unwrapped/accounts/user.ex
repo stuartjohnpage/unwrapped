@@ -8,10 +8,7 @@ defmodule Unwrapped.Accounts.User do
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
 
-    many_to_many(:events, Unwrapped.Events.Event,
-      join_through: "subscribed_events",
-      on_replace: :delete
-    )
+    has_many :event_attendees, Unwrapped.EventAttendee, foreign_key: :event_id
 
     timestamps()
   end

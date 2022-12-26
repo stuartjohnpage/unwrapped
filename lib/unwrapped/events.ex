@@ -37,7 +37,6 @@ defmodule Unwrapped.Events do
   """
   def get_event!(id) do
     Event
-    |> preload(:users)
     |> Repo.get!(id)
   end
 
@@ -104,5 +103,9 @@ defmodule Unwrapped.Events do
   """
   def change_event(%Event{} = event, attrs \\ %{}) do
     Event.changeset(event, attrs)
+  end
+
+  def subscribe_to_event() do
+
   end
 end

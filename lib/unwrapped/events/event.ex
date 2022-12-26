@@ -4,11 +4,7 @@ defmodule Unwrapped.Events.Event do
 
   schema "events" do
     field :name, :string
-
-    many_to_many(:users, Unwrapped.Accounts.User,
-      join_through: "subscribed_events",
-      on_replace: :delete
-    )
+    has_many :event_attendees, Unwrapped.EventAttendee, foreign_key: :user_id
 
     timestamps()
   end

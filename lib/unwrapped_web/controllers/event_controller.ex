@@ -26,12 +26,9 @@ defmodule UnwrappedWeb.EventController do
     end
   end
 
-  @spec show(Plug.Conn.t(), map) :: Plug.Conn.t()
   def show(conn, %{"id" => id}) do
     event = Events.get_event!(id)
-    %Event{ users: users } = event
-
-    render(conn, "show.html", event: event, users: users)
+    render(conn, "show.html", event: event)
   end
 
   def edit(conn, %{"id" => id}) do
