@@ -28,6 +28,7 @@ defmodule UnwrappedWeb.EventController do
 
   def show(conn, %{"id" => id}) do
     event = Events.get_event!(id)
+    |> IO.inspect()
     render(conn, "show.html", event: event)
   end
 
