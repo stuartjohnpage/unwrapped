@@ -6,6 +6,11 @@
     <strong>Name:</strong>
     <%= @event.name %>
   </li>
+    <%= for event_attendee <- @event_attendees do %>
+      <% event_attendee.id %>
+      <% IO.inspect(event_attendee) %>
+    <% end %>
+
 
 </ul>
 <span><%= link "Edit", to: Routes.event_path(@conn, :edit, @event) %></span> |

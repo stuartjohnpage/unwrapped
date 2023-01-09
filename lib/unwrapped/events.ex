@@ -38,7 +38,7 @@ defmodule Unwrapped.Events do
   def get_event!(id) do
     Event
     |> Repo.get!(id)
-    |> Repo.preload([:event_attendees, event_attendees: :user])
+    |> Repo.preload([:users])
   end
 
   @doc """
