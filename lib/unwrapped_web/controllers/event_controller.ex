@@ -15,6 +15,7 @@ defmodule UnwrappedWeb.EventController do
   end
 
   def create(conn, %{"event" => event_params}) do
+    IO.inspect(event_params)
     case Events.create_event(event_params) do
       {:ok, event} ->
         conn
