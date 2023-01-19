@@ -1,10 +1,10 @@
-<ul>
+<ul class="flex items-center justify-between flex-wrap bg-teal-500 p-6">
 <%= if @current_user do %>
-  <li><%= @current_user.email %></li>
-  <li><%= link "Settings", to: Routes.user_settings_path(@conn, :edit) %></li>
-  <li><%= link "Log out", to: Routes.user_session_path(@conn, :delete), method: :delete %></li>
+  <li class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"><%= @current_user.email %></li>
+  <li class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" ><%= link "Settings", to: Routes.user_settings_path(@conn, :edit) %></li>
+  <li class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"><%= link "Log out", to: Routes.user_session_path(@conn, :delete), method: :delete %></li>
 <% else %>
-  <li><%= link "Register", to: Routes.user_registration_path(@conn, :new) %></li>
-  <li><%= link "Log in", to: Routes.user_session_path(@conn, :new) %></li>
+  <li class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"><%= link "Register", to: Routes.user_registration_path(@conn, :new) %></li>
+  <li class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"><%= link "Log in", to: Routes.user_session_path(@conn, :new) %></li>
 <% end %>
 </ul>
