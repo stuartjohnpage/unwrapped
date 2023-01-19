@@ -11,8 +11,7 @@
     <ul>
     <%= for event_attendee <- @event_attendees do %>
       <li>
-        <%= event_attendee.user.email %> |
-        <%= event_attendee.gift_plan %>
+        <%= event_attendee.user.first_name %> |
       </li>
     <% end %>
     </ul>

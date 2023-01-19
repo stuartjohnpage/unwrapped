@@ -5,6 +5,7 @@ defmodule Unwrapped.EventAttendee do
     belongs_to :event, Unwrapped.Events.Event
     belongs_to :user, Unwrapped.Accounts.User
 
-    field :gift_plan, :string
+    has_many :event_attendee_to, Unwrapped.Giftplan, foreign_key: :event_attendee_to_id
+    has_many :event_attendee_from, Unwrapped.Giftplan, foreign_key: :event_attendee_from_id
   end
 end
