@@ -4,6 +4,8 @@ defmodule Unwrapped.Accounts.User do
 
   schema "users" do
     field :email, :string
+    field :first_name
+    field :last_name
     field :password, :string, virtual: true, redact: true
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
