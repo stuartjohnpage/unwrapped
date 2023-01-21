@@ -15,7 +15,6 @@ defmodule UnwrappedWeb.EventController do
   end
 
   def create(conn, %{"event" => event_params}) do
-    IO.inspect(event_params)
     case Events.create_event(event_params) do
       {:ok, event} ->
         conn
@@ -28,9 +27,9 @@ defmodule UnwrappedWeb.EventController do
   end
 
   def show(conn, %{"id" => id}) do
-    event = Events.get_event!(id)
+    event = Events.get_event_with_attendees!(id)
     event_attendees = event.event_attendees
-    
+    |> IO.inspect()
     render(conn, "show.html", event: event, event_attendees: event_attendees)
   end
 

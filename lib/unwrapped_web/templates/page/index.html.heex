@@ -1,6 +1,6 @@
-<img src={Routes.static_path(@conn, "/images/present.jpeg")} alt="A big present"/>
-<section class="text-3xl font-bold underline">
-  <h1><%= gettext "%{name}!", name: "Wrapped" %></h1>
+<section class="mx-auto">
+  <h1 class="text-7xl font-bold"><%= gettext "%{name}", name: "Wrapped" %></h1>
   <p>Two people will never get the same gift ever again.</p>
-  <%= link "Events", to: Routes.event_path(@conn, :index) %>
+  <br>
+  <button class="px-4 py-1 text-sm text-teal-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-teal-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-2"><%= link "Events", to: Routes.event_path(@conn, :index) %></button>
 </section>

@@ -1,26 +1,24 @@
-<h1>Listing Events</h1>
-
-<table>
+<br>
+<h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl">Events</h1>
+<br>
+<table class="table-auto text-left">
   <thead>
     <tr>
-      <th>Name</th>
-
-      <th></th>
+      <th class="text-left p-2">Name</th>
     </tr>
   </thead>
   <tbody>
 <%= for event <- @events do %>
     <tr>
       <td><%= event.name %></td>
-
       <td>
-        <span><%= link "Show", to: Routes.event_path(@conn, :show, event) %></span>
-        <span><%= link "Edit", to: Routes.event_path(@conn, :edit, event) %></span>
-        <span><%= link "Delete", to: Routes.event_path(@conn, :delete, event), method: :delete, data: [confirm: "Are you sure?"] %></span>
+        <span class="text-left p-2"><%= link "Show", to: Routes.event_path(@conn, :show, event) %></span>
+        <span class="text-left p-2"><%= link "Edit", to: Routes.event_path(@conn, :edit, event) %></span>
+        <span class="text-left p-2"><%= link "Delete", to: Routes.event_path(@conn, :delete, event), method: :delete, data: [confirm: "Are you sure?"] %></span>
       </td>
     </tr>
 <% end %>
   </tbody>
 </table>
-
-<span><%= link "New Event", to: Routes.event_path(@conn, :new) %></span>
+<br>
+<span class="hover:bg-teal-500 border bg-teal-600 text-white rounded-lg shadow p-2"><%= link "New Event", to: Routes.event_path(@conn, :new) %></span>
