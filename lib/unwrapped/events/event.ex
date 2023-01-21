@@ -4,7 +4,7 @@ defmodule Unwrapped.Events.Event do
 
   schema "events" do
     field :name, :string
-    has_many :event_attendees, Unwrapped.EventAttendee
+    has_many :event_attendees, Unwrapped.EventAttendees.EventAttendee
     has_many :users, through: [:event_attendees, :user]
 
     timestamps()

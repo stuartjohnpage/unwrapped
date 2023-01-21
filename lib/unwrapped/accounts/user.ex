@@ -10,7 +10,7 @@ defmodule Unwrapped.Accounts.User do
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
 
-    has_many :event_attendees, Unwrapped.EventAttendee
+    has_many :event_attendees, Unwrapped.EventAttendees.EventAttendee
 
     timestamps()
   end

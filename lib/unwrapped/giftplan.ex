@@ -4,8 +4,8 @@ defmodule Unwrapped.Giftplan do
 
   schema "giftplans" do
     field :name, :string
-    belongs_to :gift_from, Unwrapped.EventAttendee
-    belongs_to :gift_to, Unwrapped.EventAttendee
+    belongs_to :gift_from, Unwrapped.EventAttendees.EventAttendee
+    belongs_to :gift_to, Unwrapped.EventAttendees.EventAttendee
 
     timestamps()
   end
