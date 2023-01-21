@@ -5,14 +5,18 @@
   <thead>
   <tr>
     <th class="border border-slate-300 text-left p-2">Name</th>
-    <th class="border border-slate-300 text-left p-2">Gift plan</th>
+    <th class="border border-slate-300 text-left p-2">Gift plans</th>
   </tr>
   </thead>
   <tbody id="boxes">
     <%= for event_attendee <- @event_attendees do %>
       <tr id={"event_attendee-#{event_attendee.id}"}>
         <td class="text-left border border-slate-300 p-2"><%= event_attendee.user.first_name %></td>
-        <td class="text-left border border-slate-300 p-2"><%= "Car" %></td>
+        <td class="text-left border border-slate-300 p-2">
+          <%= for event_attendee_from <- event_attendee.event_attendee_from do %>
+            <%= event_attendee_from.name %> for <%= event_attendee_from.gift_to.user.first_name %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
