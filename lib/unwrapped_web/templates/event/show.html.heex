@@ -14,7 +14,10 @@
         <td class="text-left border border-slate-300 p-2"><%= event_attendee.user.first_name %></td>
         <td class="text-left border border-slate-300 p-2">
           <%= for event_attendee_from <- event_attendee.event_attendee_from do %>
-            <%= event_attendee_from.name %> for <%= event_attendee_from.gift_to.user.first_name %>
+            <%= event_attendee_from.name %> for <%= event_attendee_from.gift_to.user.first_name %><br>
+          <% end %>
+          <%= if Enum.empty?(event_attendee.event_attendee_from) do%>
+            <p>No gift plans</p>
           <% end %>
         </td>
       </tr>
