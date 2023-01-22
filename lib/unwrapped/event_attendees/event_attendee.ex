@@ -8,6 +8,7 @@ defmodule Unwrapped.EventAttendees.EventAttendee do
 
     has_many :event_attendee_from, Unwrapped.Giftplan, foreign_key: :gift_from_id
     has_many :event_attendee_to, Unwrapped.Giftplan, foreign_key: :gift_to_id
+    timestamps()
 
   end
 

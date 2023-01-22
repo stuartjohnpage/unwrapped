@@ -3,10 +3,11 @@ defmodule UnwrappedWeb.EventController do
 
   alias Unwrapped.Events
   alias Unwrapped.Events.Event
+  alias Unwrapped.EventAttendees
 
-  def index(conn, _params) do
+  def index(%{assigns: %{current_user: current_user}} = conn, _params) do
     events = Events.list_events()
-    render(conn, "index.html", events: events)
+    render(conn, "index.html", events: events, current_user: current_user)
   end
 
   def new(conn, _params) do
@@ -15,6 +16,8 @@ defmodule UnwrappedWeb.EventController do
   end
 
   def create(conn, %{"event" => event_params}) do
+    IO.inspect(event_params)
+    # %{"name" => "Katherine's Birthday"}
     case Events.create_event(event_params) do
       {:ok, event} ->
         conn
@@ -29,9 +32,6 @@ defmodule UnwrappedWeb.EventController do
   def show(%{assigns: %{current_user: current_user}} = conn, %{"id" => id}) do
     event = Events.get_event_with_attendees!(id)
     event_attendees = event.event_attendees
-
-    conn
-    |> IO.inspect()
 
     render(conn, "show.html", event: event, event_attendees: event_attendees, current_user: current_user)
   end
@@ -62,6 +62,12 @@ defmodule UnwrappedWeb.EventController do
 
     conn
     |> put_flash(:info, "Event deleted successfully.")
+    |> redirect(to: Routes.event_path(conn, :index))
+  end
+
+  def sign_up(%{assigns: %{current_user: current_user}} = conn, %{"id" => id}) do
+    EventAttendees.create_event_attendee(%{"user_id" => current_user.id, "event_id" => id})
+    conn
     |> redirect(to: Routes.event_path(conn, :index))
   end
 end
