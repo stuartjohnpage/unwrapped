@@ -80,6 +80,7 @@ defmodule UnwrappedWeb.Router do
     get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
     resources "/events", EventController
     put "/events/:id/sign_up", EventController, :sign_up
+    put "/events/:id/create_gift_plan", EventController, :create_gift_plan
   end
 
   scope "/", UnwrappedWeb do

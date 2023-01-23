@@ -6,6 +6,7 @@
   <tr>
     <th class="border border-slate-300 text-left p-2">Name</th>
     <th class="border border-slate-300 text-left p-2">Gift plans</th>
+    <th class="border border-slate-300 text-left p-2">Actions</th>
   </tr>
   </thead>
   <tbody id="boxes">
@@ -23,6 +24,9 @@
             <p>No gift plans</p>
           <% end %>
           <% end %>
+        </td>
+        <td class="text-left border border-slate-300 p-2">
+          <span><%= link "Add Gift Plan", to: Routes.event_path(@conn, :create_gift_plan, @event, event_attendee: event_attendee), method: :put %></span>
         </td>
       </tr>
     <% end %>

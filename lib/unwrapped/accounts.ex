@@ -60,6 +60,12 @@ defmodule Unwrapped.Accounts do
   """
   def get_user!(id), do: Repo.get!(User, id)
 
+  def get_user_and_event_attendees(id) do
+    Repo.get(User, id)
+    |> Repo.preload(event_attendees: [event_attendee_from: [gift_to: [:user]]])
+  end
+
+
   ## User registration
 
   @doc """

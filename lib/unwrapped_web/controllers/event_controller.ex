@@ -1,6 +1,6 @@
 defmodule UnwrappedWeb.EventController do
   use UnwrappedWeb, :controller
-
+  alias Unwrapped.Accounts
   alias Unwrapped.Events
   alias Unwrapped.Events.Event
   alias Unwrapped.EventAttendees
@@ -33,7 +33,11 @@ defmodule UnwrappedWeb.EventController do
     event = Events.get_event_with_attendees!(id)
     event_attendees = event.event_attendees
 
-    render(conn, "show.html", event: event, event_attendees: event_attendees, current_user: current_user)
+    render(conn, "show.html",
+      event: event,
+      event_attendees: event_attendees,
+      current_user: current_user
+    )
   end
 
   def edit(conn, %{"id" => id}) do
@@ -67,6 +71,20 @@ defmodule UnwrappedWeb.EventController do
 
   def sign_up(%{assigns: %{current_user: current_user}} = conn, %{"id" => id}) do
     EventAttendees.create_event_attendee(%{"user_id" => current_user.id, "event_id" => id})
+
+    conn
+    |> redirect(to: Routes.event_path(conn, :index))
+  end
+
+  def create_gift_plan(%{assigns: %{current_user: current_user}} = conn, %{"id" => id}) do
+    user = Accounts.get_user_and_event_attendees(current_user.id)
+
+    user.event_attendees
+    |> Enum.find(fn attendee ->
+      attendee.event_id == String.to_integer(id)
+    end)
+    |> IO.inspect()
+
     conn
     |> redirect(to: Routes.event_path(conn, :index))
   end
