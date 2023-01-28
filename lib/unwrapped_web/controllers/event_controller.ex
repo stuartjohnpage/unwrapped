@@ -76,14 +76,16 @@ defmodule UnwrappedWeb.EventController do
     |> redirect(to: Routes.event_path(conn, :index))
   end
 
-  def create_gift_plan(%{assigns: %{current_user: current_user}} = conn, %{"id" => id}) do
+  def create_gift_plan(%{assigns: %{current_user: current_user}} = conn, %{"id" => id, "event_attendee" => event_attendee}) do
     user = Accounts.get_user_and_event_attendees(current_user.id)
-
-    user.event_attendees
+    gift_receiver = EventAttendees.get_event_attendee!(event_attendee)
+    gift_giver = user.event_attendees
     |> Enum.find(fn attendee ->
       attendee.event_id == String.to_integer(id)
     end)
-    |> IO.inspect()
+
+    IO.inspect(gift_receiver, label: "gift_reciever")
+    IO.inspect(gift_giver, label: "gift_giver")
 
     conn
     |> redirect(to: Routes.event_path(conn, :index))

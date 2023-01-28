@@ -15,4 +15,9 @@ defmodule Unwrapped.EventAttendees do
     |> EventAttendee.changeset(attrs)
     |> Repo.insert()
   end
+
+  def get_event_attendee!(id) do
+    EventAttendee
+    |> Repo.get!(id)
+  end
 end
