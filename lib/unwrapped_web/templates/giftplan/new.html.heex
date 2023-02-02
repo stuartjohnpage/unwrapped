@@ -1,3 +1,4 @@
 <%= render "form.html", Map.put(assigns, :action, Routes.giftplan_path(@conn, :create, [gift_giver: @gift_giver, gift_receiver: @gift_receiver])) %>
-
-<span><%= link "Back", to: Routes.giftplan_path(@conn, :index) %></span>
+ <div class="pb-2 pl-4">
+  <span class="px-4 py-1 text-sm text-teal-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-teal-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-2"><%= link "Back", to: Routes.giftplan_path(@conn, :index) %></span>
+</div>
