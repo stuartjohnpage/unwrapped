@@ -1,5 +1,3 @@
-<h1>New Giftplan</h1>
-
 <%= render "form.html", Map.put(assigns, :action, Routes.giftplan_path(@conn, :create, [gift_giver: @gift_giver, gift_receiver: @gift_receiver])) %>
 
 <span><%= link "Back", to: Routes.giftplan_path(@conn, :index) %></span>
