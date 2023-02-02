@@ -1,4 +1,4 @@
-defmodule Unwrapped.Giftplan do
+defmodule Unwrapped.Giftplans.Giftplan do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -13,7 +13,9 @@ defmodule Unwrapped.Giftplan do
   @doc false
   def changeset(giftplan, attrs) do
     giftplan
-    |> cast(attrs, [:name])
-    |> validate_required([:name])
+    |> cast(attrs, [:name, :gift_to_id, :gift_from_id])
+    |> validate_required([:name, :gift_to_id, :gift_from_id])
   end
 end
+
+# <%= text_input :giftplan, :name, value: "Enter Giftplan" %>

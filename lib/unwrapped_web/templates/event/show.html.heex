@@ -26,13 +26,14 @@
           <% end %>
         </td>
         <td class="text-left border border-slate-300 p-2">
-          <span><%= link "Add Gift Plan", to: Routes.event_path(@conn, :create_gift_plan, @event, event_attendee: event_attendee), method: :put %></span>
+          <span><%= link "Add Gift Plan", to: Routes.giftplan_path(@conn, :new, [event: @event, event_attendee: event_attendee])%></span>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 <br>
+
 <span class="px-4 py-1 text-sm text-teal-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-teal-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-2"><%= link "Edit", to: Routes.event_path(@conn, :edit, @event) %></span> |
 <span class="px-4 py-1 text-sm text-teal-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-teal-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-2"><%= link "Back", to: Routes.event_path(@conn, :index) %></span>
 <span class="px-4 py-1 text-sm text-teal-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-teal-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-2"><%= link "Sign Up", to: Routes.event_path(@conn, :sign_up, @event), method: :put %></span>

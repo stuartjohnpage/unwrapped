@@ -1,0 +1,30 @@
+<h1>Listing Giftplans</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Gift from</th>
+      <th>Gift to</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for giftplan <- @giftplans do %>
+    <tr>
+      <td><%= giftplan.name %></td>
+      <td><%= giftplan.gift_from_id %></td>
+      <td><%= giftplan.gift_to_id %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.giftplan_path(@conn, :show, giftplan) %></span>
+        <span><%= link "Edit", to: Routes.giftplan_path(@conn, :edit, giftplan) %></span>
+        <span><%= link "Delete", to: Routes.giftplan_path(@conn, :delete, giftplan), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Giftplan", to: Routes.giftplan_path(@conn, :new) %></span>
