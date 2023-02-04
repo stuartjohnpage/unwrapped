@@ -20,4 +20,16 @@ defmodule Unwrapped.EventAttendees do
     EventAttendee
     |> Repo.get!(id)
   end
+
+  def get_event_attendee_with_event(id) do
+    EventAttendee
+    |> Repo.get!(id)
+    |> Repo.preload([:event])
+  end
+
+  def get_event_attendee_with_event!(id) do
+    EventAttendee
+    |> Repo.get!(id)
+    |> Repo.preload([:event])
+  end
 end

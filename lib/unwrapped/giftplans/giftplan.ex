@@ -17,5 +17,3 @@ defmodule Unwrapped.Giftplans.Giftplan do
     |> validate_required([:name, :gift_to_id, :gift_from_id])
   end
 end
-
-# <%= text_input :giftplan, :name, value: "Enter Giftplan" %>

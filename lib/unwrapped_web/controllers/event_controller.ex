@@ -79,9 +79,4 @@ defmodule UnwrappedWeb.EventController do
     end
 
   end
-
-  def create_gift_plan(conn, _params) do
-    conn
-    |> redirect(to: Routes.event_path(conn, :index))
-  end
 end

@@ -11,27 +11,43 @@ defmodule UnwrappedWeb.GiftplanController do
     render(conn, "index.html", giftplans: giftplans)
   end
 
-  def new(%{assigns: %{current_user: current_user}} = conn, %{"event" => id, "event_attendee" => event_attendee}) do
-
+  def new(%{assigns: %{current_user: current_user}} = conn, %{
+        "event" => id,
+        "event_attendee" => event_attendee
+      }) do
     user = Accounts.get_user_and_event_attendees(current_user.id)
-    gift_receiver = EventAttendees.get_event_attendee!(event_attendee)
-    gift_giver = user.event_attendees
-    |> Enum.find(fn attendee ->
-      attendee.event_id == String.to_integer(id)
-    end)
+    gift_receiver = EventAttendees.get_event_attendee_with_event!(event_attendee)
+    event = gift_receiver.event
+    gift_giver =
+      user.event_attendees
+      |> Enum.find(fn attendee ->
+        attendee.event_id == String.to_integer(id)
+      end)
 
     gift_receiver_user = Accounts.get_user!(gift_receiver.user_id)
-    changeset = Giftplans.change_giftplan(%Giftplan{gift_to_id: gift_receiver.id, gift_from_id: gift_giver.id})
-    render(conn, "new.html", changeset: changeset, gift_receiver: gift_receiver_user.first_name, gift_giver: current_user.first_name)
+
+    changeset =
+      Giftplans.change_giftplan(%Giftplan{
+        gift_to_id: gift_receiver.id,
+        gift_from_id: gift_giver.id
+      })
+
+    render(conn, "new.html",
+      changeset: changeset,
+      gift_receiver: gift_receiver_user.first_name,
+      gift_giver: current_user.first_name,
+      event: event
+    )
   end
 
   def create(conn, %{"giftplan" => giftplan_params}) do
     case Giftplans.create_giftplan(giftplan_params) do
       {:ok, giftplan} ->
-        IO.inspect(giftplan)
+        event = EventAttendees.get_event_attendee_with_event(giftplan.gift_from_id).event
+
         conn
         |> put_flash(:info, "Giftplan created successfully.")
-        |> redirect(to: Routes.giftplan_path(conn, :show, giftplan))
+        |> redirect(to: Routes.event_path(conn, :show, event))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)

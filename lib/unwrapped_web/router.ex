@@ -81,7 +81,7 @@ defmodule UnwrappedWeb.Router do
     resources "/events", EventController
     put "/events/:id/sign_up", EventController, :sign_up
     put "/events/:id/create_gift_plan", EventController, :create_gift_plan
-    resources "/giftplans", GiftplanController
+    resources "/giftplans", GiftplanController, only: [:new, :create]
   end
 
   scope "/", UnwrappedWeb do
