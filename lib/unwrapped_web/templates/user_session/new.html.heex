@@ -28,11 +28,11 @@
   </.form>
 </div>
 <div class="pl-4">
-<span class="w-20 px-4 py-1 text-sm text-teal-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-teal-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-2">
-  <%= link "Register", to: Routes.user_registration_path(@conn, :new) %>
-</span>
-<span class="pl-2"> | </span>
-<span class="w-20 px-4 py-1 text-sm text-teal-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-teal-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-2">
-  <%= link "Forgot your password?", to: Routes.user_reset_password_path(@conn, :new) %>
-</span>
+  <span class="w-20 px-4 py-1 text-sm text-teal-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-teal-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-2">
+    <%= link "Register", to: Routes.user_registration_path(@conn, :new) %>
+  </span>
+  <span class="pl-2"> | </span>
+  <span class="w-20 px-4 py-1 text-sm text-teal-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-teal-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-2">
+    <%= link "Forgot your password?", to: Routes.user_reset_password_path(@conn, :new) %>
+  </span>
 </div>

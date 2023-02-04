@@ -1,4 +1,4 @@
-<h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl">Register</h1>
+<h1 class="mb-4 pl-2 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl">Register</h1>
 <div class="flex flex-col">
   <.form let={f} for={@changeset} action={Routes.user_registration_path(@conn, :create)}>
     <%= if @changeset.action do %>
@@ -25,17 +25,26 @@
     <%= error_tag f, :email %>
   </div>
   <div class="pb-2 pl-2">
-    <%= label f, :password %>
+    <%= label f, :choose_a_password %>
     <br>
     <%= password_input f, :password, required: true %>
     <%= error_tag f, :password %>
   </div>
-    <div class="pl-2">
+  <div class="pl-2">
+    <div class=" pl-2 w-20 px-4 py-1 text-sm text-teal-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-teal-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-2">
       <%= submit "Register" %>
+    </div>
     </div>
   </.form>
 </div>
-<p class="pl-2">
-  <%= link "Log in", to: Routes.user_session_path(@conn, :new) %> |
-  <%= link "Forgot your password?", to: Routes.user_reset_password_path(@conn, :new) %>
-</p>
+<br>
+<br>
+<div class="pl-2">
+  <span class="w-20 px-4 py-1 text-sm text-teal-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-teal-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-2">
+    <%= link "Log in", to: Routes.user_session_path(@conn, :new) %>
+  </span>
+  <span class="pl-2"> | </span>
+  <span class="w-20 px-4 py-1 text-sm text-teal-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-teal-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-2">
+    <%= link "Forgot your password?", to: Routes.user_reset_password_path(@conn, :new) %>
+  </span>
+</div>
