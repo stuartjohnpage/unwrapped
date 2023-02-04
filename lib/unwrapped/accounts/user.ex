@@ -1,4 +1,5 @@
 defmodule Unwrapped.Accounts.User do
+  alias Unwrapped.Accounts.User
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -36,6 +37,7 @@ defmodule Unwrapped.Accounts.User do
   def registration_changeset(user, attrs, opts \\ []) do
     user
     |> cast(attrs, [:first_name, :last_name, :email, :password])
+    |> validate_access_password(attrs)
     |> validate_required([:first_name, :last_name])
     |> validate_email()
     |> validate_password(opts)
@@ -142,5 +144,27 @@ defmodule Unwrapped.Accounts.User do
     else
       add_error(changeset, :current_password, "is not valid")
     end
+  end
+
+  defp validate_access_password(changeset, %{"access_password" => given_access_password}) do
+    access_password = Application.fetch_env!(:super_secret_config, :super_secret_access_password)
+    admin_password = Application.fetch_env!(:super_secret_config, :super_secret_admin_password)
+
+    case given_access_password do
+      ^access_password ->
+        changeset
+        |> change(admin: false)
+
+      ^admin_password ->
+        changeset
+        |> change(admin: true)
+
+      _ ->
+        add_error(changeset, :current_password, "is not valid")
+    end
+  end
+
+  defp validate_access_password(changeset, %{}) do
+    changeset
   end
 end

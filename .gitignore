@@ -32,3 +32,6 @@ unwrapped-*.tar
 npm-debug.log
 /assets/node_modules/
 
+# keep it secret, keep it safe
+**/*.secret.exs
+
