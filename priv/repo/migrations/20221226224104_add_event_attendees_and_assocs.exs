@@ -11,6 +11,6 @@ defmodule Unwrapped.Repo.Migrations.AddEventAttendeesAndAssocs do
     end
 
     create index(:event_attendees, [:event_id])
-    create index(:event_attendees, [:user_id])
+    create unique_index(:event_attendees, [:user_id])
   end
 end

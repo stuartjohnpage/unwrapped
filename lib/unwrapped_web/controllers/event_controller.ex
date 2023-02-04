@@ -29,7 +29,6 @@ defmodule UnwrappedWeb.EventController do
   def show(%{assigns: %{current_user: current_user}} = conn, %{"id" => id}) do
     event = Events.get_event_with_attendees!(id)
     event_attendees = event.event_attendees
-
     render(conn, "show.html",
       event: event,
       event_attendees: event_attendees,
@@ -67,9 +66,18 @@ defmodule UnwrappedWeb.EventController do
   end
 
   def sign_up(%{assigns: %{current_user: current_user}} = conn, %{"id" => id}) do
-    EventAttendees.create_event_attendee(%{"user_id" => current_user.id, "event_id" => id})
-    conn
-    |> redirect(to: Routes.event_path(conn, :index))
+    case EventAttendees.create_event_attendee(%{"user_id" => current_user.id, "event_id" => id}) do
+      {:ok, _} ->
+        event = Events.get_event!(id)
+        conn
+        |> put_flash(:info, "Signed up to event successfully!")
+        |> redirect(to: Routes.event_path(conn, :show, event))
+      {:error, _} ->
+        conn
+        |> put_flash(:error, "Error")
+        |> redirect(to: Routes.event_path(conn, :index))
+    end
+
   end
 
   def create_gift_plan(conn, _params) do

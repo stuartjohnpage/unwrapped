@@ -19,7 +19,7 @@ defmodule UnwrappedWeb.GiftplanController do
     |> Enum.find(fn attendee ->
       attendee.event_id == String.to_integer(id)
     end)
-    # Giftplans.create_giftplan(%{"gift_to_id" => gift_receiver.id, "gift_from_id" => gift_giver.id, "name" => "bike"})
+    
     gift_receiver_user = Accounts.get_user!(gift_receiver.user_id)
     changeset = Giftplans.change_giftplan(%Giftplan{gift_to_id: gift_receiver.id, gift_from_id: gift_giver.id})
     render(conn, "new.html", changeset: changeset, gift_receiver: gift_receiver_user.first_name, gift_giver: current_user.first_name)

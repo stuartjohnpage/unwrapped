@@ -15,5 +15,6 @@ defmodule Unwrapped.EventAttendees.EventAttendee do
   def changeset(event_attendee, attrs) do
     event_attendee
     |> cast(attrs, [:event_id, :user_id])
+    |> unique_constraint(:user_id)
   end
 end
