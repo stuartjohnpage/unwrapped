@@ -31,3 +31,15 @@ Click on a person, summary of gifts that that person is recieivng. You can add a
 ### Find a person
 
 Search your friends, once you click on that person, you can add gift ideas for that person. that person can add gift ideas for themselves.
+
+## Setup
+
+The only setup you should have to do (besides using asdf to install elixir and erlang using the correction versions in the `.tool-versions` is creating an `dev.secret.exs` file in the config direction, and filling it with:
+
+```
+import Config
+
+config :super_secret_config,
+  super_secret_access_password: "example_access_password",
+  super_secret_admin_password: "example_admin_password"
+```
