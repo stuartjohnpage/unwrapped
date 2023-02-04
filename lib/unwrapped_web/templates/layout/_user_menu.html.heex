@@ -2,7 +2,7 @@
   <li class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"><%= link "Wrapped", to: Routes.page_path(@conn, :index) %></li>
 <%= if @current_user do %>
   <li class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"><%= link "Events", to: Routes.event_path(@conn, :index) %></li>
-  <li class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" ><%= link "Settings", to: Routes.user_settings_path(@conn, :edit) %></li>
+  <li class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" ><%= link @conn.assigns.current_user.first_name, to: Routes.user_settings_path(@conn, :edit) %></li>
   <li class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"><%= link "Log out", to: Routes.user_session_path(@conn, :delete), method: :delete %></li>
 <% else %>
   <li class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"><%= link "Register", to: Routes.user_registration_path(@conn, :new) %></li>

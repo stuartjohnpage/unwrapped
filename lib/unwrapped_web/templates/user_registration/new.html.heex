@@ -25,13 +25,15 @@
     <%= error_tag f, :email %>
   </div>
   <div class="pb-2 pl-2">
-    <%= label f, :choose_a_password %>
+    <%= label f, :choose_an_account_password %>
     <br>
     <%= password_input f, :password, required: true %>
     <%= error_tag f, :password %>
   </div>
 
   <div class="pb-2 pl-2">
+    <%= label f, :enter_your_access_password %>
+    <br>
     <%= text_input f, :access_password %>
   </div>
 

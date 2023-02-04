@@ -39,7 +39,7 @@ The only setup you should have to do (besides using asdf to install elixir and e
 ```
 import Config
 
-config :super_secret_config,
+config :unwrapped,
   super_secret_access_password: "example_access_password",
   super_secret_admin_password: "example_admin_password"
 ```

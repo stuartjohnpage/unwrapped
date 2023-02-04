@@ -1,5 +1,4 @@
 defmodule Unwrapped.Accounts.User do
-  alias Unwrapped.Accounts.User
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -147,8 +146,8 @@ defmodule Unwrapped.Accounts.User do
   end
 
   defp validate_access_password(changeset, %{"access_password" => given_access_password}) do
-    access_password = Application.fetch_env!(:super_secret_config, :super_secret_access_password)
-    admin_password = Application.fetch_env!(:super_secret_config, :super_secret_admin_password)
+    access_password = Application.fetch_env!(:unwrapped, :super_secret_access_password)
+    admin_password = Application.fetch_env!(:unwrapped, :super_secret_admin_password)
 
     case given_access_password do
       ^access_password ->
