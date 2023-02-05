@@ -28,7 +28,9 @@
           </td>
           <%= if event_attendee.user_id != @current_user.id do%>
             <td class="text-left border border-slate-300 p-2">
+            <%= if user_signed_up(@current_user, @event_attendees) do%>
               <span><%= link "Add Gift Plan", to: Routes.giftplan_path(@conn, :new, [event: @event, event_attendee: event_attendee])%></span>
+            <% end %>
             </td>
           <% else %>
             <td class="text-left border border-slate-300 p-2">
