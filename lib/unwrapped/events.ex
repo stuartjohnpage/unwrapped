@@ -5,7 +5,7 @@ defmodule Unwrapped.Events do
 
   import Ecto.Query, warn: false
   alias Unwrapped.Repo
-
+  alias Unwrapped.Accounts.User
   alias Unwrapped.Events.Event
 
   @doc """
@@ -38,6 +38,7 @@ defmodule Unwrapped.Events do
   def get_event!(id) do
     Event
     |> Repo.get!(id)
+    |> Repo.preload([:users])
   end
 
   def get_event_with_attendees(id) do
@@ -58,10 +59,12 @@ defmodule Unwrapped.Events do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_event(attrs \\ %{}) do
+  def create_event(%User{} = user, attrs \\ %{}) do
     %Event{}
     |> Event.changeset(attrs)
+    |> Ecto.Changeset.put_assoc(:owner, user)
     |> Repo.insert()
+    |> IO.inspect()
   end
 
   @doc """

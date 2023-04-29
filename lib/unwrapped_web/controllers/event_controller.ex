@@ -11,12 +11,13 @@ defmodule UnwrappedWeb.EventController do
 
   def new(conn, _params) do
     changeset = Events.change_event(%Event{})
+    IO.inspect(changeset)
+
     render(conn, "new.html", changeset: changeset)
   end
 
-  def create(conn, %{"event" => event_params}) do
-    IO.inspect(event_params)
-    case Events.create_event(event_params) do
+  def create(%{assigns: %{current_user: current_user}} = conn, %{"event" => event_params}) do
+    case Events.create_event(current_user, event_params) do
       {:ok, event} ->
         conn
         |> put_flash(:info, "Event created successfully.")
@@ -28,9 +29,9 @@ defmodule UnwrappedWeb.EventController do
   end
 
   def show(%{assigns: %{current_user: current_user}} = conn, %{"id" => id}) do
-    IO.inspect(id)
     event = Events.get_event_with_attendees(id)
     event_attendees = event.event_attendees
+
     render(conn, "show.html",
       event: event,
       event_attendees: event_attendees,
@@ -71,14 +72,15 @@ defmodule UnwrappedWeb.EventController do
     case EventAttendees.create_event_attendee(%{"user_id" => current_user.id, "event_id" => id}) do
       {:ok, _} ->
         event = Events.get_event!(id)
+
         conn
         |> put_flash(:info, "Signed up to event successfully!")
         |> redirect(to: Routes.event_path(conn, :show, event))
+
       {:error, _} ->
         conn
         |> put_flash(:error, "Error")
         |> redirect(to: Routes.event_path(conn, :index))
     end
-
   end
 end

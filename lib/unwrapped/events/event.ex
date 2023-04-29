@@ -17,6 +17,6 @@ defmodule Unwrapped.Events.Event do
     event
     |> cast(attrs, [:name])
     |> cast_assoc(:owner)
-    |> validate_required([:name, :owner])
+    |> validate_required([:name])
   end
 end
