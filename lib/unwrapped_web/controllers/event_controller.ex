@@ -27,7 +27,8 @@ defmodule UnwrappedWeb.EventController do
   end
 
   def show(%{assigns: %{current_user: current_user}} = conn, %{"id" => id}) do
-    event = Events.get_event_with_attendees!(id)
+    IO.inspect(id)
+    event = Events.get_event_with_attendees(id)
     event_attendees = event.event_attendees
     render(conn, "show.html",
       event: event,

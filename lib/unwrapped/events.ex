@@ -40,9 +40,9 @@ defmodule Unwrapped.Events do
     |> Repo.get!(id)
   end
 
-  def get_event_with_attendees!(id) do
+  def get_event_with_attendees(id) do
     Event
-    |> Repo.get!(id)
+    |> Repo.get(id)
     |> Repo.preload([:users, event_attendees: [event_attendee_from: [gift_to: [:user]]]])
   end
 

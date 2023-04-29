@@ -9,7 +9,6 @@ defmodule Unwrapped.Accounts.User do
     field :password, :string, virtual: true, redact: true
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
-    field :admin, :boolean
 
     has_many :event_attendees, Unwrapped.EventAttendees.EventAttendee
 
@@ -36,7 +35,6 @@ defmodule Unwrapped.Accounts.User do
   def registration_changeset(user, attrs, opts \\ []) do
     user
     |> cast(attrs, [:first_name, :last_name, :email, :password])
-    |> validate_access_password(attrs)
     |> validate_required([:first_name, :last_name])
     |> validate_email()
     |> validate_password(opts)
@@ -111,14 +109,6 @@ defmodule Unwrapped.Accounts.User do
   end
 
   @doc """
-  Confirms the account by setting `confirmed_at`.
-  """
-  def confirm_changeset(user) do
-    now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
-    change(user, confirmed_at: now)
-  end
-
-  @doc """
   Verifies the password.
 
   If there is no user or the user doesn't have a password, we call
@@ -143,27 +133,5 @@ defmodule Unwrapped.Accounts.User do
     else
       add_error(changeset, :current_password, "is not valid")
     end
-  end
-
-  defp validate_access_password(changeset, %{"access_password" => given_access_password}) do
-    access_password = Application.fetch_env!(:unwrapped, :super_secret_access_password)
-    admin_password = Application.fetch_env!(:unwrapped, :super_secret_admin_password)
-
-    case given_access_password do
-      ^access_password ->
-        changeset
-        |> change(admin: false)
-
-      ^admin_password ->
-        changeset
-        |> change(admin: true)
-
-      _ ->
-        add_error(changeset, :current_password, "is not valid")
-    end
-  end
-
-  defp validate_access_password(changeset, %{}) do
-    changeset
   end
 end

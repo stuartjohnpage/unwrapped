@@ -8,21 +8,19 @@
     </tr>
   </thead>
   <tbody>
-<%= for event <- @events do %>
-    <tr>
-      <td class="text-left border border-slate-300 p-2"><%= event.name %></td>
-      <td class="text-left border border-slate-300 p-2">
-      <span class="text-left p-2"><%= link "Show", to: Routes.event_path(@conn, :show, event) %></span>
-      <%= if @current_user.admin do%>
-        <span class="text-left p-2"><%= link "Edit", to: Routes.event_path(@conn, :edit, event) %></span>
-        <span class="text-left p-2"><%= link "Delete", to: Routes.event_path(@conn, :delete, event), method: :delete, data: [confirm: "Are you sure?"] %></span>
-      <%end%>
-      </td>
-    </tr>
-<% end %>
+    <%= for event <- @events do %>
+        <tr>
+          <td class="text-left border border-slate-300 p-2"><%= event.name %></td>
+          <td class="text-left border border-slate-300 p-2">
+          <span class="text-left p-2"><%= link "Show", to: Routes.event_path(@conn, :show, event) %></span>
+          <span class="text-left p-2"><%= link "Edit", to: Routes.event_path(@conn, :edit, event) %></span>
+          <span class="text-left p-2"><%= link "Delete", to: Routes.event_path(@conn, :delete, event), method: :delete, data: [confirm: "Are you sure?"] %></span>
+          </td>
+        </tr>
+    <% end %>
   </tbody>
 </table>
 <br>
-<%= if @current_user.admin do%>
+<%= if @current_user do%>
   <span class="hover:bg-teal-500 border bg-teal-600 text-white rounded-lg shadow p-2"><%= link "New Event", to: Routes.event_path(@conn, :new) %></span>
 <%end%>
