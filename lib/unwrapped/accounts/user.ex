@@ -9,6 +9,7 @@ defmodule Unwrapped.Accounts.User do
     field :password, :string, virtual: true, redact: true
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
+    has_many :owned_events, Unwrapped.Events.Event, foreign_key: :user_id
 
     has_many :event_attendees, Unwrapped.EventAttendees.EventAttendee
 

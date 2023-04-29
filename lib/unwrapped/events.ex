@@ -110,8 +110,4 @@ defmodule Unwrapped.Events do
   def change_event(%Event{} = event, attrs \\ %{}) do
     Event.changeset(event, attrs)
   end
-
-  def subscribe_to_event() do
-
-  end
 end

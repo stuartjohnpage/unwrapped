@@ -4,6 +4,8 @@ defmodule Unwrapped.Events.Event do
 
   schema "events" do
     field :name, :string
+
+    belongs_to :owner, Unwrapped.Accounts.User
     has_many :event_attendees, Unwrapped.EventAttendees.EventAttendee
     has_many :users, through: [:event_attendees, :user]
 
@@ -14,6 +16,7 @@ defmodule Unwrapped.Events.Event do
   def changeset(event, attrs) do
     event
     |> cast(attrs, [:name])
-    |> validate_required([:name])
+    |> cast_assoc(:owner)
+    |> validate_required([:name, :owner])
   end
 end
