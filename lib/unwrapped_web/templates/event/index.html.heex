@@ -1,26 +1,39 @@
 <br>
-<h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl">All Events</h1>
+<h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl">Your Events</h1>
 <br>
-<table class="table-auto text-left">
-  <thead>
-    <tr>
-      <th class="border border-slate-300 text-left p-2">Name</th>
-    </tr>
-  </thead>
-  <tbody>
-    <%= for event <- @events do %>
-        <tr>
-          <td class="text-left border border-slate-300 p-2"><%= event.name %></td>
-          <td class="text-left border border-slate-300 p-2">
-          <span class="text-left p-2"><%= link "Show", to: Routes.event_path(@conn, :show, event) %></span>
-          <span class="text-left p-2"><%= link "Edit", to: Routes.event_path(@conn, :edit, event) %></span>
-          <span class="text-left p-2"><%= link "Delete", to: Routes.event_path(@conn, :delete, event), method: :delete, data: [confirm: "Are you sure?"] %></span>
-          </td>
-        </tr>
-    <% end %>
-  </tbody>
-</table>
-<br>
-<%= if @current_user do%>
+
+<%= if @current_user do %>
+  <h2 class="mb-4 text-2xl font-bold leading-none tracking-tight text-gray-700">Join Event</h2>
+<%= form_for @conn, Routes.event_path(@conn, :join_by_invite_code), [as: :event], fn f -> %>
+  <%= label f, :invite_code, "Event Invite Code" %>
+  <%= text_input f, :invite_code %>
+  <%= submit "Join Event" %>
+<% end %>
+
+  <br>
+
+  <h2 class="mb-4 text-2xl font-bold leading-none tracking-tight text-gray-700">Your Events</h2>
+  <table class="table-auto text-left">
+    <thead>
+      <tr>
+        <th class="border border-slate-300 text-left p-2">Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= for event <- @user_events do %>
+          <tr>
+            <td class="text-left border border-slate-300 p-2"><%= event.name %></td>
+            <td class="text-left border border-slate-300 p-2">
+            <span class="text-left p-2"><%= link "Show", to: Routes.event_path(@conn, :show, event) %></span>
+            <span class="text-left p-2"><%= link "Edit", to: Routes.event_path(@conn, :edit, event) %></span>
+            <span class="text-left p-2"><%= link "Delete", to: Routes.event_path(@conn, :delete, event), method: :delete, data: [confirm: "Are you sure?"] %></span>
+            </td>
+          </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <br>
   <span class="hover:bg-teal-500 border bg-teal-600 text-white rounded-lg shadow p-2"><%= link "New Event", to: Routes.event_path(@conn, :new) %></span>
-<%end%>
+<% else %>
+  <p>Please log in to view events.</p>
+<% end %>

@@ -79,7 +79,8 @@ defmodule UnwrappedWeb.Router do
     put "/users/settings", UserSettingsController, :update
     get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
     resources "/events", EventController
-    put "/events/:id/sign_up", EventController, :sign_up
+    post "/events/join_by_invite_code", EventController, :join_by_invite_code
+    post "/events/:id/sign_up", EventController, :sign_up
     put "/events/:id/create_gift_plan", EventController, :create_gift_plan
     resources "/giftplans", GiftplanController, only: [:new, :create]
   end

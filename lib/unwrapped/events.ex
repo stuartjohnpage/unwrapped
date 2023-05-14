@@ -113,4 +113,32 @@ defmodule Unwrapped.Events do
   def change_event(%Event{} = event, attrs \\ %{}) do
     Event.changeset(event, attrs)
   end
+
+  def get_event_by_invite_code(invite_code) do
+    Event
+    |> where(invite_code: ^invite_code)
+    |> Repo.one()
+  end
+
+  @doc """
+  Fetches all events for a given user.
+
+  ## Params:
+
+  - `user`: A User struct, must contain `id`.
+
+  ## Returns:
+
+  - List of Event structs associated with the user.
+
+  """
+
+  def list_user_events(user) do
+    from(e in Event,
+      join: ea in assoc(e, :event_attendees),
+      where: ea.user_id == ^user.id,
+      select: e
+    )
+    |> Repo.all()
+  end
 end

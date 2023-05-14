@@ -5,8 +5,8 @@ defmodule UnwrappedWeb.EventController do
   alias Unwrapped.EventAttendees
 
   def index(%{assigns: %{current_user: current_user}} = conn, _params) do
-    events = Events.list_events()
-    render(conn, "index.html", events: events, current_user: current_user)
+    user_events = Events.list_user_events(current_user)
+    render(conn, "index.html", user_events: user_events, current_user: current_user)
   end
 
   def new(conn, _params) do
@@ -75,6 +75,27 @@ defmodule UnwrappedWeb.EventController do
 
         conn
         |> put_flash(:info, "Signed up to event successfully!")
+        |> redirect(to: Routes.event_path(conn, :show, event))
+
+      {:error, _} ->
+        conn
+        |> put_flash(:error, "Error")
+        |> redirect(to: Routes.event_path(conn, :index))
+    end
+  end
+
+  def join_by_invite_code(%{assigns: %{current_user: current_user}} = conn, %{
+        "event" => %{"invite_code" => invite_code}
+      }) do
+    event = Events.get_event_by_invite_code(invite_code)
+
+    case EventAttendees.create_event_attendee(%{
+           "user_id" => current_user.id,
+           "event_id" => event.id
+         }) do
+      {:ok, _} ->
+        conn
+        |> put_flash(:info, "Joined event successfully!")
         |> redirect(to: Routes.event_path(conn, :show, event))
 
       {:error, _} ->

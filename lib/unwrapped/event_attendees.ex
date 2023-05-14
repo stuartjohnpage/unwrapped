@@ -10,10 +10,13 @@ defmodule Unwrapped.EventAttendees do
     EventAttendee.changeset(event_attendee, attrs)
   end
 
-  def create_event_attendee(attrs \\ %{}) do
+  def create_event_attendee(attrs) do
     %EventAttendee{}
     |> EventAttendee.changeset(attrs)
     |> Repo.insert()
+  rescue
+    Ecto.ConstraintError ->
+      {:error, :already_signed_up}
   end
 
   def get_event_attendee!(id) do

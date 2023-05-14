@@ -4,6 +4,7 @@ defmodule Unwrapped.Events.Event do
 
   schema "events" do
     field :name, :string
+    field :invite_code, :string
 
     belongs_to :owner, Unwrapped.Accounts.User
     has_many :event_attendees, Unwrapped.EventAttendees.EventAttendee
@@ -15,8 +16,9 @@ defmodule Unwrapped.Events.Event do
   @doc false
   def changeset(event, attrs) do
     event
-    |> cast(attrs, [:name])
-    |> cast_assoc(:owner)
-    |> validate_required([:name])
+    |> cast(attrs, [:name, :invite_code])
+    |> validate_required([:name, :invite_code])
+    |> validate_length(:invite_code, min: 10) # or whatever length you deem necessary
+    |> unique_constraint(:invite_code)
   end
 end
