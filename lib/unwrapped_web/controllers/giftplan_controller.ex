@@ -18,6 +18,7 @@ defmodule UnwrappedWeb.GiftplanController do
     user = Accounts.get_user_and_event_attendees(current_user.id)
     gift_receiver = EventAttendees.get_event_attendee_with_event!(event_attendee)
     event = gift_receiver.event
+
     gift_giver =
       user.event_attendees
       |> Enum.find(fn attendee ->

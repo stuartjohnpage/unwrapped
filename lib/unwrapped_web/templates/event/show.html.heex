@@ -1,6 +1,8 @@
-<br>
-<h1 class="pl-2 mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl"><%= @event.name <> " Attendees" %></h1>
-<br>
+<br />
+<h1 class="pl-2 mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl">
+  <%= @event.name <> " Attendees" %>
+</h1>
+<br />
 <div class="pl-2">
   <table>
     <thead>
@@ -13,24 +15,34 @@
     <tbody id="boxes">
       <%= for event_attendee <- @event_attendees do %>
         <tr id={"event_attendee-#{event_attendee.id}"}>
-          <td class="text-left border border-slate-300 p-2"><%= event_attendee.user.first_name %></td>
+          <td class="text-left border border-slate-300 p-2">
+            <%= event_attendee.user.first_name %>
+          </td>
           <td class="text-left border border-slate-300 p-2">
             <%= for event_attendee_from <- event_attendee.event_attendee_from do %>
-              <%= if event_attendee_from.gift_to.user.id == @current_user.id do%>
-                <p> This gift is for you  (<%= @current_user.first_name%>)! You can't see it.</p>
+              <%= if event_attendee_from.gift_to.user.id == @current_user.id do %>
+                <p>This gift is for you  (<%= @current_user.first_name %>)! You can't see it.</p>
               <% else %>
-                <%= event_attendee_from.name %> for <%= event_attendee_from.gift_to.user.first_name %><br>
+                <%= event_attendee_from.name %> for <%= event_attendee_from.gift_to.user.first_name %><br />
               <% end %>
-              <%= if Enum.empty?(event_attendee.event_attendee_from) do%>
+              <%= if Enum.empty?(event_attendee.event_attendee_from) do %>
                 <p>No gift plans</p>
               <% end %>
             <% end %>
           </td>
-          <%= if event_attendee.user_id != @current_user.id do%>
+          <%= if event_attendee.user_id != @current_user.id do %>
             <td class="text-left border border-slate-300 p-2">
-            <%= if user_signed_up(@current_user, @event_attendees) do%>
-              <span><%= link "Add Gift Plan", to: Routes.giftplan_path(@conn, :new, [event: @event, event_attendee: event_attendee])%></span>
-            <% end %>
+              <%= if user_signed_up(@current_user, @event_attendees) do %>
+                <span>
+                  <%= link("Add Gift Plan",
+                    to:
+                      Routes.giftplan_path(@conn, :new,
+                        event: @event,
+                        event_attendee: event_attendee
+                      )
+                  ) %>
+                </span>
+              <% end %>
             </td>
           <% else %>
             <td class="text-left border border-slate-300 p-2">
@@ -42,13 +54,22 @@
     </tbody>
   </table>
 </div>
-<br>
+<br />
 <div class="pl-2">
-  <span class="px-4 py-1 text-sm text-teal-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-teal-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-2"><%= link "Edit", to: Routes.event_path(@conn, :edit, @event) %></span> |
-  <span class="px-4 py-1 text-sm text-teal-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-teal-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-2"><%= link "Back", to: Routes.event_path(@conn, :index) %></span>
-  <%= if user_signed_up(@current_user, @event_attendees) do%>
-    <span class="px-4 py-1 text-sm text-grey-600 font-semibold rounded-full border border-purple-200 ">Sign Up</span>
+  <span class="px-4 py-1 text-sm text-teal-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-teal-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-2">
+    <%= link("Edit", to: Routes.event_path(@conn, :edit, @event)) %>
+  </span>
+  |
+  <span class="px-4 py-1 text-sm text-teal-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-teal-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-2">
+    <%= link("Back", to: Routes.event_path(@conn, :index)) %>
+  </span>
+  <%= if user_signed_up(@current_user, @event_attendees) do %>
+    <span class="px-4 py-1 text-sm text-grey-600 font-semibold rounded-full border border-purple-200 ">
+      Sign Up
+    </span>
   <% else %>
-    <span class="px-4 py-1 text-sm text-teal-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-teal-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-2"><%= link "Sign Up", to: Routes.event_path(@conn, :sign_up, @event), method: :put %></span>
+    <span class="px-4 py-1 text-sm text-teal-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-teal-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-2">
+      <%= link("Sign Up", to: Routes.event_path(@conn, :sign_up, @event), method: :put) %>
+    </span>
   <% end %>
 </div>

@@ -1,5 +1,8 @@
 <h1>Edit Giftplan</h1>
 
-<%= render "form.html", Map.put(assigns, :action, Routes.giftplan_path(@conn, :update, @giftplan)) %>
+<%= render(
+  "form.html",
+  Map.put(assigns, :action, Routes.giftplan_path(@conn, :update, @giftplan))
+) %>
 
-<span><%= link "Back", to: Routes.giftplan_path(@conn, :index) %></span>
+<span><%= link("Back", to: Routes.giftplan_path(@conn, :index)) %></span>

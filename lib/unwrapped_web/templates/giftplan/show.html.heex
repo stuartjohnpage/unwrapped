@@ -1,7 +1,6 @@
 <h1>Show Giftplan</h1>
 
 <ul>
-
   <li>
     <strong>Name:</strong>
     <%= @giftplan.name %>
@@ -16,8 +15,7 @@
     <strong>Gift to:</strong>
     <%= @giftplan.gift_to_id %>
   </li>
-
 </ul>
 
-<span><%= link "Edit", to: Routes.giftplan_path(@conn, :edit, @giftplan) %></span> |
-<span><%= link "Back", to: Routes.giftplan_path(@conn, :index) %></span>
+<span><%= link("Edit", to: Routes.giftplan_path(@conn, :edit, @giftplan)) %></span> |
+<span><%= link("Back", to: Routes.giftplan_path(@conn, :index)) %></span>

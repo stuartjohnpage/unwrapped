@@ -65,7 +65,6 @@ defmodule Unwrapped.Accounts do
     |> Repo.preload(event_attendees: [event_attendee_from: [gift_to: [:user]]])
   end
 
-
   ## User registration
 
   @doc """

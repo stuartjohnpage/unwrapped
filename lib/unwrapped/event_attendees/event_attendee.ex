@@ -9,7 +9,6 @@ defmodule Unwrapped.EventAttendees.EventAttendee do
     has_many :event_attendee_from, Unwrapped.Giftplans.Giftplan, foreign_key: :gift_from_id
     has_many :event_attendee_to, Unwrapped.Giftplans.Giftplan, foreign_key: :gift_to_id
     timestamps()
-
   end
 
   def changeset(event_attendee, attrs) do

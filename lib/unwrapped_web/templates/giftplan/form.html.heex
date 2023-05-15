@@ -6,16 +6,20 @@
       </div>
     <% end %>
     <div class="pb-2 pl-4">
-      <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl">What are you getting for <%= @gift_receiver %>?</h1>
+      <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl">
+        What are you getting for <%= @gift_receiver %>?
+      </h1>
     </div>
     <div class="pb-4 pl-4">
-      <%= text_input f, :name %>
-      <%= error_tag f, :name %>
+      <%= text_input(f, :name) %>
+      <%= error_tag(f, :name) %>
     </div>
-      <%= hidden_input f, :gift_from_id %>
-      <%= hidden_input f, :gift_to_id %>
+    <%= hidden_input(f, :gift_from_id) %>
+    <%= hidden_input(f, :gift_to_id) %>
     <div class="pb-4 pl-4">
-      <p class=" w-16 pl-4 px-4 py-1 text-sm text-teal-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-teal-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-2"><%= submit "Save" %></p>
+      <p class=" w-16 pl-4 px-4 py-1 text-sm text-teal-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-teal-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-2">
+        <%= submit("Save") %>
+      </p>
     </div>
   </.form>
 </div>

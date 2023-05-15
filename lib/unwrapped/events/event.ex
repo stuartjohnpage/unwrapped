@@ -18,7 +18,8 @@ defmodule Unwrapped.Events.Event do
     event
     |> cast(attrs, [:name, :invite_code])
     |> validate_required([:name, :invite_code])
-    |> validate_length(:invite_code, min: 10) # or whatever length you deem necessary
+    # or whatever length you deem necessary
+    |> validate_length(:invite_code, min: 10)
     |> unique_constraint(:invite_code)
   end
 end
