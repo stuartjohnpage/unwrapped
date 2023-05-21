@@ -11,7 +11,6 @@ defmodule UnwrappedWeb.EventController do
 
   def new(conn, _params) do
     changeset = Events.change_event(%Event{})
-    IO.inspect(changeset)
 
     render(conn, "new.html", changeset: changeset)
   end
@@ -19,6 +18,11 @@ defmodule UnwrappedWeb.EventController do
   def create(%{assigns: %{current_user: current_user}} = conn, %{"event" => event_params}) do
     case Events.create_event(current_user, event_params) do
       {:ok, event} ->
+        EventAttendees.create_event_attendee(%{
+          "user_id" => current_user.id,
+          "event_id" => event.id
+        })
+
         conn
         |> put_flash(:info, "Event created successfully.")
         |> redirect(to: Routes.event_path(conn, :show, event))
