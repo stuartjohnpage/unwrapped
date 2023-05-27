@@ -16,7 +16,17 @@
       <%= for event_attendee <- @event_attendees do %>
         <tr id={"event_attendee-#{event_attendee.id}"}>
           <td class="text-left border border-slate-300 p-2">
-            <%= event_attendee.user.first_name %>
+            <%= if event_attendee.user.id == @current_user.id do %>
+              <%= @current_user.first_name %>
+            <% else %>
+              <%= link(event_attendee.user.first_name,
+                to:
+                  Routes.gift_idea_path(@conn, :index,
+                    giver_id: @current_user.id,
+                    recipient_id: event_attendee.user_id
+                  )
+              ) %>
+            <% end %>
           </td>
           <td class="text-left border border-slate-300 p-2">
             <%= for event_attendee_from <- event_attendee.event_attendee_from do %>
