@@ -38,11 +38,12 @@ for any and all occasions!
   </tbody>
 </table>
 </div>
-<div class="pb-5 pt-5">
-<span><h2 class="mb-4 text-2xl font-bold leading-none tracking-tight text-gray-700"><%= link("New Gift idea for " <> @recipient.first_name, to: Routes.gift_idea_path(@conn, :new, giver_id: @current_user.id, recipient_id: @recipient.id)) %></h2></span>
+<div class="pb-5 pt-5 w-36">
+<span><h2 class="hover:bg-teal-500 w-36 border bg-teal-600 text-white rounded-lg shadow p-2"><%= link("New Gift idea for " <> @recipient.first_name, to: Routes.gift_idea_path(@conn, :new, giver_id: @current_user.id, recipient_id: @recipient.id)) %></h2></span>
 </div>
 <div class="pb-5">
 <h2 class="mb-4 text-2xl font-bold leading-none tracking-tight text-gray-700">Use AI to generate a gift idea!</h2>
+<span><h2 class="hover:bg-teal-500 w-36 border bg-teal-600 text-white rounded-lg shadow p-2">Generate Gift Idea</h2></span>
 </div>
 
 

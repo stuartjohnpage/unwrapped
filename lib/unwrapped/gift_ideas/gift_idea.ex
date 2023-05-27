@@ -11,7 +11,9 @@ defmodule Unwrapped.GiftIdeas.GiftIdea do
 
   def changeset(gift_idea, attrs) do
     gift_idea
-    |> cast(attrs, [:idea])
-    |> validate_required([:idea])
+    |> cast(attrs, [:idea, :giver_id, :recipient_id])
+    |> validate_required([:idea, :giver_id, :recipient_id])
+    |> foreign_key_constraint(:giver_id)
+    |> foreign_key_constraint(:recipient_id)
   end
 end

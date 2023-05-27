@@ -8,7 +8,8 @@ defmodule UnwrappedWeb.GiftIdeaController do
     giver = Accounts.get_user!(giver_id)
     recipient = Accounts.get_user!(recipient_id)
 
-    gift_idea = GiftIdeas.list_gift_idea()
+    gift_idea = GiftIdeas.get_gift_ideas_for_giver_and_recipient(giver_id, recipient_id)
+    IO.inspect(gift_idea, label: "here")
     render(conn, "index.html", gift_idea: gift_idea, giver: giver, recipient: recipient)
   end
 

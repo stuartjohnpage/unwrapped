@@ -102,9 +102,9 @@ defmodule Unwrapped.GiftIdeas do
     GiftIdea.changeset(gift_idea, attrs)
   end
 
-  def get_gift_ideas_by_giver(giver_id) do
+  def get_gift_ideas_for_giver_and_recipient(giver_id, recipient_id) do
     from(g in Unwrapped.GiftIdeas.GiftIdea,
-      where: g.giver_id == ^giver_id
+      where: g.giver_id == ^giver_id and g.recipient_id == ^recipient_id
     )
     |> Repo.all()
   end
