@@ -6,7 +6,13 @@ defmodule UnwrappedWeb.EventController do
 
   def index(%{assigns: %{current_user: current_user}} = conn, _params) do
     user_events = Events.list_user_events(current_user)
-    render(conn, "index.html", user_events: user_events, current_user: current_user)
+    events = Events.list_events()
+
+    render(conn, "index.html",
+      user_events: user_events,
+      current_user: current_user,
+      events: events
+    )
   end
 
   def new(conn, _params) do

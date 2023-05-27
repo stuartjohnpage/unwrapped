@@ -10,68 +10,68 @@
     action={Routes.user_settings_path(@conn, :update)}
     id="update_email"
   >
-  <%= if @email_changeset.action do %>
-    <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below.</p>
+    <%= if @email_changeset.action do %>
+      <div class="alert alert-danger">
+        <p>Oops, something went wrong! Please check the errors below.</p>
+      </div>
+    <% end %>
+
+    <%= hidden_input(f, :action, name: "action", value: "update_email") %>
+    <div class="mb-4">
+      <%= label(f, :email) %>
+      <%= email_input(f, :email, required: true) %>
+      <%= error_tag(f, :email) %>
     </div>
-  <% end %>
+    <div class="mb-6">
+      <%= label(f, :current_password, for: "current_password_for_email") %>
+      <%= password_input(f, :current_password,
+        required: true,
+        name: "current_password",
+        id: "current_password_for_email"
+      ) %>
+      <%= error_tag(f, :current_password) %>
+    </div>
 
-  <%= hidden_input(f, :action, name: "action", value: "update_email") %>
-  <div class="mb-4">
-  <%= label(f, :email) %>
-  <%= email_input(f, :email, required: true) %>
-  <%= error_tag(f, :email) %>
-  </div>
-  <div class="mb-6">
-  <%= label(f, :current_password, for: "current_password_for_email") %>
-  <%= password_input(f, :current_password,
-    required: true,
-    name: "current_password",
-    id: "current_password_for_email"
-  ) %>
-  <%= error_tag(f, :current_password) %>
-  </div>
-
-  <span class="hover:bg-teal-500 border bg-teal-600 text-white rounded-lg shadow p-2">
-    <%= submit("Change email") %>
-  </span>
-</.form>
+    <span class="hover:bg-teal-500 border bg-teal-600 text-white rounded-lg shadow p-2">
+      <%= submit("Change email") %>
+    </span>
+  </.form>
 </div>
-<br>
+<br />
 <h2 class="mb-4 text-2xl font-bold leading-none tracking-tight text-gray-700">Change Password</h2>
 <div class="mx-auto">
-<.form
-  let={f}
-  for={@password_changeset}
-  action={Routes.user_settings_path(@conn, :update)}
-  id="update_password"
->
-  <%= if @password_changeset.action do %>
-    <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below.</p>
-    </div>
-  <% end %>
+  <.form
+    let={f}
+    for={@password_changeset}
+    action={Routes.user_settings_path(@conn, :update)}
+    id="update_password"
+  >
+    <%= if @password_changeset.action do %>
+      <div class="alert alert-danger">
+        <p>Oops, something went wrong! Please check the errors below.</p>
+      </div>
+    <% end %>
 
-  <%= hidden_input(f, :action, name: "action", value: "update_password") %>
+    <%= hidden_input(f, :action, name: "action", value: "update_password") %>
 
-  <%= label(f, :password, "New password") %>
-  <%= password_input(f, :password, required: true) %>
-  <%= error_tag(f, :password) %>
-  <br>
-  <%= label(f, :password_confirmation, "Confirm new password") %>
-  <%= password_input(f, :password_confirmation, required: true) %>
-  <%= error_tag(f, :password_confirmation) %>
-  <br>
-  <%= label(f, :current_password, for: "current_password_for_password") %>
-  <%= password_input(f, :current_password,
-    required: true,
-    name: "current_password",
-    id: "current_password_for_password"
-  ) %>
-  <%= error_tag(f, :current_password) %>
+    <%= label(f, :password, "New password") %>
+    <%= password_input(f, :password, required: true) %>
+    <%= error_tag(f, :password) %>
+    <br />
+    <%= label(f, :password_confirmation, "Confirm new password") %>
+    <%= password_input(f, :password_confirmation, required: true) %>
+    <%= error_tag(f, :password_confirmation) %>
+    <br />
+    <%= label(f, :current_password, for: "current_password_for_password") %>
+    <%= password_input(f, :current_password,
+      required: true,
+      name: "current_password",
+      id: "current_password_for_password"
+    ) %>
+    <%= error_tag(f, :current_password) %>
 
-  <span class="hover:bg-teal-500 border bg-teal-600 text-white rounded-lg shadow p-2">
-    <%= submit("Change password") %>
-  </span>
-</.form>
+    <span class="hover:bg-teal-500 border bg-teal-600 text-white rounded-lg shadow p-2">
+      <%= submit("Change password") %>
+    </span>
+  </.form>
 </div>
