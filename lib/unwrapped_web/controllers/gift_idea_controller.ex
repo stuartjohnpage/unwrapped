@@ -17,6 +17,8 @@ defmodule UnwrappedWeb.GiftIdeaController do
         "A great gift please"
       end
 
+    IO.inspect(gift_context, label: "context inside of index")
+
     render(conn, "index.html",
       gift_ideas: gift_ideas,
       giver: giver,
@@ -36,6 +38,25 @@ defmodule UnwrappedWeb.GiftIdeaController do
       })
 
     render(conn, "new.html", changeset: changeset, recipient: recipient, giver: giver)
+  end
+
+  def generate(conn, %{"gift_idea" => gift_idea_params}) do
+    recipient_id = gift_idea_params["recipient_id"]
+    giver_id = gift_idea_params["giver_id"]
+    context = gift_idea_params["gift_context"]
+    IO.inspect(context, label: "context inside of generate")
+
+    case OpenAI.generate_gift_idea(context) do
+      {:ok, %{item: item, description: description}} ->
+        conn
+        |> put_flash(:info, "AI gift idea generated successfully: #{item}")
+        |> redirect(to: Routes.gift_idea_path(conn, :index, recipient_id, giver_id))
+
+      {:error, _, _} ->
+        conn
+        |> put_flash(:error, "Failed to generate AI gift idea.")
+        |> redirect(to: Routes.gift_idea_path(conn, :index, recipient_id, giver_id))
+    end
   end
 
   def create(conn, %{
@@ -81,12 +102,13 @@ defmodule UnwrappedWeb.GiftIdeaController do
     conn
     |> put_flash(:info, "Gift idea deleted successfully.")
     |> redirect(
-      to: Routes.gift_idea_path(
-        conn,
-        :index,
-        recipient_id,
-        giver_id
-      )
+      to:
+        Routes.gift_idea_path(
+          conn,
+          :index,
+          recipient_id,
+          giver_id
+        )
     )
   end
 

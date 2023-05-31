@@ -26,7 +26,9 @@
 
           <td class="text-left border border-slate-300 p-2">
             <span class="text-left p-2">
-              <%= link("Edit", to: Routes.gift_idea_path(@conn, :edit, @recipient.id, @giver.id, gift_idea)) %>
+              <%= link("Edit",
+                to: Routes.gift_idea_path(@conn, :edit, @recipient.id, @giver.id, gift_idea)
+              ) %>
             </span>
             <span class="text-left p-2">
               <%= link("Delete",
@@ -45,11 +47,7 @@
   <span>
     <h2 class="hover:bg-teal-500 w-36 border bg-teal-600 text-white rounded-lg shadow p-2">
       <%= link("New Gift idea for " <> @recipient.first_name,
-        to:
-          Routes.gift_idea_path(@conn, :new,
-            @recipient,
-            @giver
-          )
+        to: Routes.gift_idea_path(@conn, :new, @recipient, @giver)
       ) %>
     </h2>
   </span>

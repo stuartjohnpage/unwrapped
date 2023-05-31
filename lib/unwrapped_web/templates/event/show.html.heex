@@ -20,11 +20,7 @@
               <%= @current_user.first_name %>
             <% else %>
               <%= link(event_attendee.user.first_name,
-                to:
-                  Routes.gift_idea_path(@conn, :index,
-                    event_attendee.user_id,
-                    @current_user.id
-                  )
+                to: Routes.gift_idea_path(@conn, :index, event_attendee.user_id, @current_user.id)
               ) %>
             <% end %>
           </td>

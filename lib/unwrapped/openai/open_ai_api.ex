@@ -33,7 +33,7 @@ defmodule OpenAI do
     case HTTPoison.post(url, body, headers, options) do
       {:ok, %Response{status_code: 200, body: body}} ->
         {:ok, Jason.decode!(body)}
-        |> IO.inspect()
+        |> parse_response()
 
       {:ok, %Response{status_code: status_code, body: body}} ->
         {:error, "Received status #{status_code}, body: #{body}"}
@@ -42,5 +42,14 @@ defmodule OpenAI do
       {:error, %Error{reason: reason}} ->
         {:error, reason}
     end
+  end
+
+  def parse_response(body) do
+    {:ok, response} = body
+    content = List.first(response["choices"])["message"]["content"]
+    [item, description] = String.split(content, ", DESCRIPTION: ")
+
+    item = String.replace(item, "ITEM: ", "")
+    {:ok, %{item: item, description: description}}
   end
 end

@@ -51,6 +51,7 @@ defmodule Unwrapped.GiftIdeas do
   """
   def create_gift_idea(attrs \\ %{}) do
     IO.inspect(attrs)
+
     %GiftIdea{}
     |> GiftIdea.changeset(attrs)
     |> Repo.insert()
