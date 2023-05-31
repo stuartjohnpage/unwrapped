@@ -26,8 +26,6 @@ defmodule UnwrappedWeb.GiftIdeaController do
   end
 
   def new(conn, %{"recipient_id" => recipient_id, "giver_id" => giver_id}) do
-    IO.inspect(recipient_id, label: "should be will 1")
-    IO.inspect(giver_id, label: "should be stu 2")
     giver = Accounts.get_user!(giver_id)
     recipient = Accounts.get_user!(recipient_id)
 
@@ -40,22 +38,20 @@ defmodule UnwrappedWeb.GiftIdeaController do
     render(conn, "new.html", changeset: changeset, recipient: recipient, giver: giver)
   end
 
-  def create(conn, %{"gift_idea" => %{"recipient_id" => recipient_id, "giver_id" => giver_id, "idea" => idea}} = params) do
-    IO.inspect(params)
-    IO.inspect(recipient_id, label: "recipient")
-    IO.inspect(giver_id, label: "giver")
-    IO.inspect(idea)
+  def create(conn, %{
+        "gift_idea" =>
+          %{"recipient_id" => recipient_id, "giver_id" => giver_id, "idea" => idea} = params
+      }) do
     case GiftIdeas.create_gift_idea(params) do
       {:ok, gift_idea} ->
         conn
         |> put_flash(:info, "Gift idea created successfully.")
-        |> redirect(to: Routes.gift_idea_path(conn, :show, recipient_id: recipient_id, giver_id: giver_id, id: gift_idea.id))
+        |> redirect(to: Routes.gift_idea_path(conn, :show, recipient_id, giver_id, gift_idea.id))
 
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
   end
-
 
   def show(conn, %{"recipient_id" => recipient_id, "giver_id" => giver_id, "id" => id}) do
     gift_idea = GiftIdeas.get_gift_idea!(id)
@@ -76,6 +72,7 @@ defmodule UnwrappedWeb.GiftIdeaController do
     gift_ideas = GiftIdeas.get_gift_ideas_for_giver_and_recipient(giver_id, recipient_id)
     giver = Accounts.get_user!(giver_id)
     recipient = Accounts.get_user!(recipient_id)
+
     gift_context =
       if gift_ideas != [],
         do: List.first(gift_ideas).idea,
@@ -83,7 +80,14 @@ defmodule UnwrappedWeb.GiftIdeaController do
 
     conn
     |> put_flash(:info, "Gift idea deleted successfully.")
-    |> redirect(to: Routes.gift_idea_path(conn, :index, recipient_id: recipient_id, giver_id: giver_id))
+    |> redirect(
+      to: Routes.gift_idea_path(
+        conn,
+        :index,
+        recipient_id,
+        giver_id
+      )
+    )
   end
 
   def update(conn, %{"id" => id, "gift_idea" => gift_idea_params}) do
@@ -93,7 +97,16 @@ defmodule UnwrappedWeb.GiftIdeaController do
       {:ok, updated_gift_idea} ->
         conn
         |> put_flash(:info, "Gift idea updated successfully.")
-        |> redirect(to: Routes.gift_idea_path(conn, :show, recipient_id: updated_gift_idea.recipient_id, giver_id: updated_gift_idea.giver_id, id: updated_gift_idea.id))
+        |> redirect(
+          to:
+            Routes.gift_idea_path(
+              conn,
+              :show,
+              updated_gift_idea.recipient_id,
+              updated_gift_idea.giver_id,
+              updated_gift_idea.id
+            )
+        )
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", gift_idea: gift_idea, changeset: changeset)
