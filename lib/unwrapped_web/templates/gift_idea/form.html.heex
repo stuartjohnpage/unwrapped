@@ -1,4 +1,6 @@
-<h2 class="mb-4 text-2xl font-bold leading-none tracking-tight text-gray-700">What's a good gift idea for <%= @recipient.first_name %>?</h2>
+<h2 class="mb-4 text-2xl font-bold leading-none tracking-tight text-gray-700">
+  What's a good gift idea for <%= @recipient.first_name %>?
+</h2>
 
 <.form let={f} for={@changeset} action={@action}>
   <%= if @changeset.action do %>
@@ -7,17 +9,17 @@
     </div>
   <% end %>
 
-  <%= label f, :idea %>
-  <%= text_input f, :idea %>
-  <%= error_tag f, :idea %>
+  <%= label(f, :idea) %>
+  <%= text_input(f, :idea) %>
+  <%= error_tag(f, :idea) %>
 
   <%= hidden_input(f, :giver_id) %>
   <%= hidden_input(f, :recipient_id) %>
 
   <div>
-    <%= submit "Save" %>
+    <%= submit("Save") %>
   </div>
 </.form>
 
-<p> Work in progress </p>
-<p>Interests are: </p>
+<p>Work in progress</p>
+<p>Interests are:</p>

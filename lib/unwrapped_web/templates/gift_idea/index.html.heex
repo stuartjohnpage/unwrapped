@@ -2,48 +2,69 @@
   Gift ideas for <%= @recipient.first_name %>
 </h1>
 <div class="pb-5">
-<p>
-Never fear! These gift ideas are completely private and cannot be accessed by anyone except you. Feel free to add gifts
-for any and all occasions!
-</p>
+  <p>
+    Never fear! These gift ideas are completely private and cannot be accessed by anyone except you. Feel free to add gifts
+    for any and all occasions!
+  </p>
 </div>
 <div>
-<h2 class="mb-4 text-2xl font-bold leading-none tracking-tight text-gray-700">Current Gift Ideas</h2>
-<table class="table-auto text-left">
-  <thead>
-    <tr>
-      <th class="border border-slate-300 text-left p-2">Idea</th>
-
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <%= for gift_idea <- @gift_idea do %>
+  <h2 class="mb-4 text-2xl font-bold leading-none tracking-tight text-gray-700">
+    Current Gift Ideas
+  </h2>
+  <table class="table-auto text-left">
+    <thead>
       <tr>
-        <td class="text-left border border-slate-300 p-2"><%= gift_idea.idea %></td>
+        <th class="border border-slate-300 text-left p-2">Idea</th>
 
-        <td class="text-left border border-slate-300 p-2">
-          <span class="text-left p-2"><%= link("Show", to: Routes.gift_idea_path(@conn, :show, gift_idea)) %></span>
-          <span class="text-left p-2"><%= link("Edit", to: Routes.gift_idea_path(@conn, :edit, gift_idea)) %></span>
-          <span class="text-left p-2">
-            <%= link("Delete",
-              to: Routes.gift_idea_path(@conn, :delete, gift_idea),
-              method: :delete,
-              data: [confirm: "Are you sure?"]
-            ) %>
-          </span>
-        </td>
+        <th></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <%= for gift_idea <- @gift_ideas do %>
+        <tr>
+          <td class="text-left border border-slate-300 p-2"><%= gift_idea.idea %></td>
+
+          <td class="text-left border border-slate-300 p-2">
+            <span class="text-left p-2">
+              <%= link("Edit", to: Routes.gift_idea_path(@conn, :edit, @recipient.id, @giver.id, gift_idea)) %>
+            </span>
+            <span class="text-left p-2">
+              <%= link("Delete",
+                to: Routes.gift_idea_path(@conn, :edit, @recipient.id, @giver.id, gift_idea),
+                method: :delete,
+                data: [confirm: "Are you sure?"]
+              ) %>
+            </span>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>
 <div class="pb-5 pt-5 w-36">
-<span><h2 class="hover:bg-teal-500 w-36 border bg-teal-600 text-white rounded-lg shadow p-2"><%= link("New Gift idea for " <> @recipient.first_name, to: Routes.gift_idea_path(@conn, :new, giver_id: @current_user.id, recipient_id: @recipient.id)) %></h2></span>
+  <span>
+    <h2 class="hover:bg-teal-500 w-36 border bg-teal-600 text-white rounded-lg shadow p-2">
+      <%= link("New Gift idea for " <> @recipient.first_name,
+        to:
+          Routes.gift_idea_path(@conn, :new,
+            @current_user.id,
+            @recipient.id
+          )
+      ) %>
+    </h2>
+  </span>
 </div>
 <div class="pb-5">
-<h2 class="mb-4 text-2xl font-bold leading-none tracking-tight text-gray-700">Use AI to generate a gift idea!</h2>
-<span><h2 class="hover:bg-teal-500 w-36 border bg-teal-600 text-white rounded-lg shadow p-2">Generate Gift Idea</h2></span>
+  <%= form_for @conn, Routes.gift_idea_path(@conn, :generate), [as: :gift_idea, method: :post], fn f -> %>
+    <%= hidden_input(f, :gift_context, value: @gift_context) %>
+    <%= hidden_input(f, :recipient_id, value: @recipient.id) %>
+    <%= hidden_input(f, :giver_id, value: @giver.id) %>
+    <button
+      type="submit"
+      class="hover:bg-teal-500 w-36 border bg-teal-600 text-white rounded-lg shadow p-2"
+    >
+      Generate AI Gift Idea
+    </button>
+  <% end %>
+  <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
 </div>
-
-

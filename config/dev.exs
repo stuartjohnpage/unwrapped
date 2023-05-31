@@ -1,5 +1,7 @@
 import Config
 
+config :unwrapped, :openai_api_key, System.get_env("OPENAI_API_KEY")
+
 # Configure your database
 config :unwrapped, Unwrapped.Repo,
   username: "postgres",

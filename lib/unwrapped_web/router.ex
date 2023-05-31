@@ -79,7 +79,12 @@ defmodule UnwrappedWeb.Router do
     put "/users/settings", UserSettingsController, :update
     get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
     resources "/events", EventController
-    resources "/gift_idea", GiftIdeaController
+
+    resources "/gift_ideas/:recipient_id/:giver_id", GiftIdeaController, only: [:new, :create, :delete, :edit]
+    get "/gift_ideas/:recipient_id/:giver_id", GiftIdeaController, :index
+    post "/gift_ideas/:recipient_id/:giver_id/generate", GiftIdeaController, :generate
+    post "/generate-gift-idea", GiftIdeaController, :generate
+
     post "/events/join_by_invite_code", EventController, :join_by_invite_code
     post "/events/:id/sign_up", EventController, :sign_up
     put "/events/:id/create_gift_plan", EventController, :create_gift_plan

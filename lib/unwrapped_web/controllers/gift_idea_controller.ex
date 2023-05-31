@@ -8,18 +8,32 @@ defmodule UnwrappedWeb.GiftIdeaController do
     giver = Accounts.get_user!(giver_id)
     recipient = Accounts.get_user!(recipient_id)
 
-    gift_idea = GiftIdeas.get_gift_ideas_for_giver_and_recipient(giver_id, recipient_id)
-    IO.inspect(gift_idea, label: "here")
-    render(conn, "index.html", gift_idea: gift_idea, giver: giver, recipient: recipient)
+    gift_ideas = GiftIdeas.get_gift_ideas_for_giver_and_recipient(giver_id, recipient_id)
+
+    gift_context =
+      if gift_ideas != [],
+        do: List.first(gift_ideas).idea,
+        else:
+          "A great gift please"
+          |> IO.inspect(label: "asdf")
+
+    render(conn, "index.html",
+      gift_ideas: gift_ideas,
+      giver: giver,
+      recipient: recipient,
+      gift_context: gift_context
+    )
   end
 
   def new(conn, %{"recipient_id" => recipient_id, "giver_id" => giver_id}) do
     giver = Accounts.get_user!(giver_id)
     recipient = Accounts.get_user!(recipient_id)
-    changeset = GiftIdeas.change_gift_idea(%GiftIdea{
-      giver_id: giver.id,
-      recipient_id: recipient.id
-    })
+
+    changeset =
+      GiftIdeas.change_gift_idea(%GiftIdea{
+        giver_id: giver.id,
+        recipient_id: recipient.id
+      })
 
     render(conn, "new.html", changeset: changeset, recipient: recipient, giver: giver)
   end
@@ -68,5 +82,21 @@ defmodule UnwrappedWeb.GiftIdeaController do
     conn
     |> put_flash(:info, "Gift idea deleted successfully.")
     |> redirect(to: Routes.gift_idea_path(conn, :index))
+  end
+
+  def generate(conn, %{
+        "gift_idea" => %{
+          "recipient_id" => recipient_id,
+          "giver_id" => giver_id,
+          "gift_context" => gift_context
+        }
+      }) do
+    # {:ok, generated_idea} = OpenAI.generate_gift_idea(gift_context)
+
+    # |> put_flash(:info, "Generated Gift Idea: #{generated_idea}")
+    query_string =
+      Plug.Conn.Query.encode(%{"recipient_id" => recipient_id, "giver_id" => giver_id})
+
+    redirect(conn, to: Routes.gift_idea_path(conn, :index) <> "?" <> query_string)
   end
 end
