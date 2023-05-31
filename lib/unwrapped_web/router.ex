@@ -80,7 +80,7 @@ defmodule UnwrappedWeb.Router do
     get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
     resources "/events", EventController
 
-    resources "/gift_ideas/:recipient_id/:giver_id", GiftIdeaController, only: [:new, :create, :delete, :edit]
+    resources "/gift_ideas/:recipient_id/:giver_id", GiftIdeaController, only: [:new, :create, :delete, :edit, :show]
     get "/gift_ideas/:recipient_id/:giver_id", GiftIdeaController, :index
     post "/gift_ideas/:recipient_id/:giver_id/generate", GiftIdeaController, :generate
     post "/generate-gift-idea", GiftIdeaController, :generate

@@ -30,7 +30,7 @@
             </span>
             <span class="text-left p-2">
               <%= link("Delete",
-                to: Routes.gift_idea_path(@conn, :edit, @recipient.id, @giver.id, gift_idea),
+                to: Routes.gift_idea_path(@conn, :delete, @recipient.id, @giver.id, gift_idea),
                 method: :delete,
                 data: [confirm: "Are you sure?"]
               ) %>
@@ -47,8 +47,8 @@
       <%= link("New Gift idea for " <> @recipient.first_name,
         to:
           Routes.gift_idea_path(@conn, :new,
-            @current_user.id,
-            @recipient.id
+            @recipient,
+            @giver
           )
       ) %>
     </h2>
